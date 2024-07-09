@@ -12,7 +12,15 @@ function sleep(ms) {
       history.onpushstate({ state: state });
     }
     // call the original pushState method
-    return pushState.apply(history, arguments);
+    var originalReturn = pushState.apply(history, arguments);
+    // Reset Disqus with new URL
+    window.DISQUS.reset({
+      reload: true,
+      config: function () {
+        this.page.url = window.location.href;
+      },
+    });
+    return originalReturn;
   };
 
   history.replaceState = function (state) {
@@ -20,7 +28,15 @@ function sleep(ms) {
       history.onreplacestate({ state: state });
     }
     // call the original replaceState method
-    return replaceState.apply(history, arguments);
+    var originalReturn = replaceState.apply(history, arguments);
+    // Reset Disqus with new URL
+    window.DISQUS.reset({
+      reload: true,
+      config: function () {
+        this.page.url = window.location.href;
+      },
+    });
+    return originalReturn;
   };
 })(window.history);
 
@@ -28,25 +44,12 @@ function loadCrunchyComments() {
   const mediaWrapper = document.querySelector(".erc-current-media-info");
   if (!mediaWrapper) return;
 
-  // Remove any existing diqus_thread div
-  const existingDisqusThread = document.querySelector("#disqus_thread");
-  if (existingDisqusThread) {
-    existingDisqusThread.remove();
-  }
-
   // Add div with id "disqus_thread" to the mediaWrapper
   const disqusThread = document.createElement("div");
   disqusThread.id = "disqus_thread";
   mediaWrapper.appendChild(disqusThread);
-
   // Load Disqus comments
-  (function () {
-    var d = document,
-      s = d.createElement("script");
-    s.src = "https://crunchycomments.disqus.com/embed.js";
-    s.setAttribute("data-timestamp", +new Date());
-    (d.head || d.body).appendChild(s);
-  })();
+  this.DISQUS.host._loadEmbed();
 }
 
 async function waitForMediaWrapper() {
@@ -59,17 +62,15 @@ async function waitForMediaWrapper() {
   }
 }
 
-// Then, add event listeners for these events
-window.history.onpushstate = function (event) {
-  waitForMediaWrapper();
-};
-window.history.onreplacestate = function (event) {
-  waitForMediaWrapper();
-};
-
-// Don't forget to handle the popstate event as well
+// Then, handle the popstate event as well
 window.onpopstate = function (event) {
-  waitForMediaWrapper();
+  // Reset Disqus with new URL
+  window.DISQUS.reset({
+    reload: true,
+    config: function () {
+      this.page.url = window.location.href;
+    },
+  });
 };
 
 async function ensureDisqusIsLastElement() {

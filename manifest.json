@@ -1,7 +1,7 @@
 {
     "name": "Crynchycomments",
     "description": "A simple disqus wrapper for crunchyroll",
-    "version": "0.5",
+    "version": "0.6",
     "manifest_version": 3,
     "action": {
         "default_popup": "clown.html",
@@ -10,7 +10,8 @@
     "content_scripts": [
         {
             "js": [
-                "scripts/comments.js"
+                "scripts/comments.js",
+                "scripts/disqus_embed.js"
             ],
             "matches": [
                 "https://www.crunchyroll.com/*"
