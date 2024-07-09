@@ -1,0 +1,21 @@
+{
+    "name": "Crynchycomments",
+    "description": "A simple disqus wrapper for crunchyroll",
+    "version": "0.5",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "clown.html",
+        "default_icon": "clown.png"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "scripts/comments.js"
+            ],
+            "matches": [
+                "https://www.crunchyroll.com/*"
+            ],
+            "world": "MAIN"
+        }
+    ]
+}
