@@ -317,14 +317,7 @@
             generic:
               "https://c.disquscdn.com/next/embed/assets/img/noavatar92.b5e491fa31234c53d6aaf029f9b0c34e.png",
           },
-          linkAffiliatorClientV4:
-            "https://c.disquscdn.com/next/embed/alfie_v4.63f1ab6d6b9d5807dc0c94ef3fe0b851.js",
-          linkAffiliatorClientV5:
-            "https://c.disquscdn.com/next/embed/alfie_v5.c2cfb63e352676d3870fc7a1c5d2bd0b.js",
           linkAffiliatorAPI: "https://links.services.disqus.com/api",
-          liveRampAts: "https://ats.rlcdn.com/ats.js",
-          liveRampAtsV2:
-            "https://launchpad-wrapper.privacymanager.io/876583a8-81cb-4d63-9d57-50a52a0bd20a/launchpad-liveramp.js",
           zyncPixelImage:
             "https://live.rezync.com/pixel.gif?c=4656c20ee35215f78e9273796625d90b",
         };
@@ -4596,12 +4589,6 @@
                 }
               (this.disable_ads = b.disableAds), (this.disable_loader = !0);
             };
-            var i = d.createElement("script");
-            (i.async = !0),
-              (i.id = "dsq_recs_scr"),
-              (i.src = "https://" + b.forum + ".disqus.com/recommendations.js"),
-              (d.head || d.body).appendChild(i),
-              (F = !0);
           }
         }),
         (c.loadApps = function (a) {
