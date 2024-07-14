@@ -2,6 +2,19 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function resetDisqus() {
+  try {
+    window.DISQUS.reset({
+      reload: true,
+      config: function () {
+        this.page.url = window.location.href;
+      },
+    });
+  } catch (e) {
+    console.error("Failed to reset Disqus", e);
+  }
+}
+
 // First, override the history.pushState and history.replaceState methods
 (function (history) {
   var pushState = history.pushState;
@@ -14,12 +27,7 @@ function sleep(ms) {
     // call the original pushState method
     var originalReturn = pushState.apply(history, arguments);
     // Reset Disqus with new URL
-    window.DISQUS.reset({
-      reload: true,
-      config: function () {
-        this.page.url = window.location.href;
-      },
-    });
+    resetDisqus();
     return originalReturn;
   };
 
@@ -30,12 +38,7 @@ function sleep(ms) {
     // call the original replaceState method
     var originalReturn = replaceState.apply(history, arguments);
     // Reset Disqus with new URL
-    window.DISQUS.reset({
-      reload: true,
-      config: function () {
-        this.page.url = window.location.href;
-      },
-    });
+    resetDisqus();
     return originalReturn;
   };
 })(window.history);
@@ -65,12 +68,7 @@ async function waitForMediaWrapper() {
 // Then, handle the popstate event as well
 window.onpopstate = function (event) {
   // Reset Disqus with new URL
-  window.DISQUS.reset({
-    reload: true,
-    config: function () {
-      this.page.url = window.location.href;
-    },
-  });
+  resetDisqus();
 };
 
 async function ensureDisqusIsLastElement() {
