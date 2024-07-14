@@ -1,7 +1,7 @@
 {
     "name": "Crynchycomments",
     "description": "A simple disqus wrapper for crunchyroll",
-    "version": "0.6",
+    "version": "0.7",
     "manifest_version": 3,
     "action": {
         "default_popup": "clown.html",
